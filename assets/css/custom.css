@@ -64,9 +64,24 @@ h1, h2, h3, h4, h5, h6, .sitename {
 .page-content {
   width: calc(100% - 17rem);
   margin-left: 17rem;
-  transition: all 0.4s;
+  transition: all 0.4s ease-in-out;
   min-height: 100vh;
   position: relative;
+}
+
+/* Increased breathing room on the left of main pages when navbar is ON */
+@media (min-width: 769px) {
+  #content:not(.active) .container {
+    padding-left: clamp(2.5rem, 5vw, 5.5rem) !important;
+    padding-right: clamp(1.5rem, 3vw, 3.5rem) !important;
+    transition: padding 0.4s ease-in-out;
+  }
+
+  #content:not(.active) .page-breadcrumb-bar {
+    padding-left: clamp(1rem, 2vw, 2.5rem);
+    padding-right: clamp(1rem, 2vw, 2.5rem);
+    transition: padding 0.4s ease-in-out;
+  }
 }
 
 /* For toggle behavior */
