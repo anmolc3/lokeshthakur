@@ -1510,6 +1510,47 @@ h1, h2, h3, h4, h5, h6, .sitename {
   }
 }
 
+/* Personal Philosophy Card with Thoughtful Portrait */
+.philosophy-card {
+  background-color: #0b1120;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.philosophy-card .philosophy-bg-img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 45%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  opacity: 0.75;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.philosophy-card:hover .philosophy-bg-img {
+  opacity: 0.85;
+  transform: scale(1.02);
+}
+
+.philosophy-card .philosophy-gradient-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #0b1120 0%, #0b1120 48%, rgba(11, 17, 32, 0.88) 62%, rgba(11, 17, 32, 0.25) 100%);
+  pointer-events: none;
+}
+
+@media (max-width: 991px) {
+  .philosophy-card .philosophy-bg-img {
+    width: 100%;
+    opacity: 0.35;
+  }
+  .philosophy-card .philosophy-gradient-scrim {
+    background: linear-gradient(180deg, rgba(11, 17, 32, 0.92) 0%, rgba(11, 17, 32, 0.85) 60%, rgba(11, 17, 32, 0.6) 100%);
+  }
+}
+
 /*--------------------------------------------------------------
 # Responsive Adjustments
 --------------------------------------------------------------*/
