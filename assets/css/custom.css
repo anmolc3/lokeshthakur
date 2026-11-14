@@ -69,7 +69,7 @@ h1, h2, h3, h4, h5, h6, .sitename {
   position: relative;
 }
 
-/* Increased breathing room on the left of main pages when navbar is ON */
+/* Increased breathing room on the left of main pages and footer when navbar is ON */
 @media (min-width: 769px) {
   #content:not(.active) .container {
     padding-left: clamp(2.5rem, 5vw, 5.5rem) !important;
@@ -80,6 +80,18 @@ h1, h2, h3, h4, h5, h6, .sitename {
   #content:not(.active) .page-breadcrumb-bar {
     padding-left: clamp(1rem, 2vw, 2.5rem);
     padding-right: clamp(1rem, 2vw, 2.5rem);
+    transition: padding 0.4s ease-in-out;
+  }
+
+  #content:not(.active) .footer-content {
+    padding-left: clamp(2.5rem, 5vw, 5.5rem) !important;
+    padding-right: clamp(2rem, 3.5vw, 4rem) !important;
+    transition: padding 0.4s ease-in-out;
+  }
+
+  #content:not(.active) .footer-copyright {
+    padding-left: clamp(2.5rem, 5vw, 5.5rem) !important;
+    padding-right: clamp(2rem, 3.5vw, 4rem) !important;
     transition: padding 0.4s ease-in-out;
   }
 }
@@ -193,20 +205,58 @@ h1, h2, h3, h4, h5, h6, .sitename {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
 }
 
+/* Mobile Drawer Backdrop Overlay */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 1045;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+body.sidebar-open {
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
   #sidebar {
     margin-left: -17rem;
+    max-width: 82vw;
+    z-index: 1050;
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.35);
   }
   #sidebar.active {
     margin-left: 0;
   }
-  #content {
-    width: 100%;
-    margin: 0;
-  }
+  #content,
   #content.active {
-    margin-left: 17rem;
-    width: calc(100% - 17rem);
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .page-content.p-5,
+  #content.p-5 {
+    padding: 1.25rem 0.85rem !important;
+  }
+  #sidebarCollapse {
+    top: 14px;
+    right: 14px;
+    padding: 0.42rem 0.85rem !important;
+    font-size: 0.82rem;
   }
 }
 
@@ -1010,7 +1060,7 @@ h1, h2, h3, h4, h5, h6, .sitename {
 .footer-wave-svg {
   background-color: transparent;
   display: block;
-  height: 50px;
+  height: 65px;
   position: relative;
   top: 0;
   margin: 0;
@@ -1029,23 +1079,24 @@ h1, h2, h3, h4, h5, h6, .sitename {
   margin-left: auto;
   margin-right: auto;
   max-width: 1240px;
-  padding: 40px 20px 45px;
+  padding: 68px 30px 60px;
   position: relative;
 }
 
 .footer-content-row {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -15px;
+  margin: 0 -18px;
+  row-gap: 2.2rem;
 }
 
 .footer-content-column {
   box-sizing: border-box;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 18px;
+  padding-right: 18px;
   width: 100%;
   color: #fff;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 @media (min-width: 768px) {
@@ -1077,20 +1128,20 @@ h1, h2, h3, h4, h5, h6, .sitename {
   letter-spacing: 1.5px;
   font-weight: 600;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .footer-menu {
-  margin-top: 20px;
+  margin-top: 8px;
 }
 
 .footer-menu-name {
   color: #f1f5f9;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
   line-height: 18px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   margin-top: 0;
   text-transform: uppercase;
   position: relative;
@@ -1100,21 +1151,21 @@ h1, h2, h3, h4, h5, h6, .sitename {
 .footer-menu-name::after {
   content: "";
   display: block;
-  width: 24px;
+  width: 28px;
   height: 2px;
   background-color: var(--lt-gold);
-  margin-top: 5px;
+  margin-top: 8px;
 }
 
 .footer-menu-list {
   list-style: none;
   margin-bottom: 0;
-  margin-top: 8px;
+  margin-top: 10px;
   padding-left: 0;
 }
 
 .footer-menu-list li {
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .footer-menu-list li a {
@@ -1131,17 +1182,17 @@ h1, h2, h3, h4, h5, h6, .sitename {
 }
 
 .footer-call-to-action {
-  margin-top: 15px;
+  margin-top: 8px;
   margin-bottom: 22px;
 }
 
 .footer-call-to-action-title {
   color: #f1f5f9;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.1em;
   line-height: 18px;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   margin-top: 0;
   text-transform: uppercase;
   position: relative;
@@ -1151,18 +1202,18 @@ h1, h2, h3, h4, h5, h6, .sitename {
 .footer-call-to-action-title::after {
   content: "";
   display: block;
-  width: 24px;
+  width: 28px;
   height: 2px;
   background-color: var(--lt-gold);
-  margin-top: 5px;
+  margin-top: 8px;
 }
 
 .footer-call-to-action-description {
   color: #94a3b8;
   font-size: 13.5px;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  line-height: 1.5;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  line-height: 1.65;
 }
 
 .footer-call-to-action-button {
@@ -1175,7 +1226,7 @@ h1, h2, h3, h4, h5, h6, .sitename {
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 10px 22px;
+  padding: 11px 24px;
   text-decoration: none;
   text-transform: uppercase;
   transition: all 0.25s ease;
@@ -1191,7 +1242,7 @@ h1, h2, h3, h4, h5, h6, .sitename {
 }
 
 .footer-call-to-action-link-wrapper {
-  margin-top: 8px;
+  margin-top: 14px;
 }
 
 .footer-call-to-action-link {
@@ -1213,7 +1264,7 @@ h1, h2, h3, h4, h5, h6, .sitename {
 .footer-copyright {
   background-color: #070d18;
   color: #94a3b8;
-  padding: 18px 25px;
+  padding: 26px 30px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -1577,23 +1628,106 @@ h1, h2, h3, h4, h5, h6, .sitename {
 }
 
 @media (max-width: 768px) {
+  /* Page Titles & Headers */
   .page-title-banner {
-    padding: 35px 0 28px 0;
+    padding: 32px 0 24px 0;
   }
   .page-title-banner h1 {
-    font-size: 28px;
-  }
-  .section-main-title {
     font-size: 26px;
   }
+  .page-breadcrumb-bar {
+    padding: 8px 12px;
+    font-size: 0.82rem;
+  }
+  .page-breadcrumb {
+    font-size: 0.82rem;
+  }
+
+  /* Section Titles */
+  .section-main-title {
+    font-size: 25px;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: auto;
+    padding: 85px 0 60px 0;
+  }
+  .hero-title-animated {
+    font-size: clamp(2rem, 7.5vw, 2.9rem);
+  }
+  .hero-author-pill {
+    font-size: 0.82rem;
+    padding: 6px 14px;
+    margin-bottom: 0.75rem;
+  }
+  .hero-quote-box {
+    margin-top: 1.25rem;
+    padding: 1rem 1.15rem;
+  }
+  .hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Book and Media Cards */
   .book-cover-container {
-    min-height: 300px;
-    padding: 20px 15px;
+    min-height: 280px;
+    padding: 18px 12px;
   }
   .book-cover-container img {
-    max-height: 260px;
+    max-height: 240px;
   }
   .event-spotlight-content {
-    padding: 24px;
+    padding: 20px;
+  }
+
+  /* Responsive Footer */
+  .footer-wave-svg {
+    height: 40px;
+  }
+  .footer-content {
+    padding: 45px 16px 35px;
+  }
+  .footer-content-row {
+    margin: 0 -10px;
+    row-gap: 1.8rem;
+  }
+  .footer-content-column {
+    margin-bottom: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .footer-copyright {
+    padding: 20px 16px;
+  }
+
+  /* Personal Philosophy Card */
+  .philosophy-card {
+    padding: 2rem 1.25rem !important;
+  }
+  .philosophy-card blockquote {
+    font-size: 1.05rem !important;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-content.p-5,
+  #content.p-5 {
+    padding: 1rem 0.65rem !important;
+  }
+  .section-main-title {
+    font-size: 22px;
+  }
+  .footer-call-to-action-button {
+    width: 100%;
+    justify-content: center;
   }
 }

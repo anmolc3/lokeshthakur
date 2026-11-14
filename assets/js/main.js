@@ -8,21 +8,54 @@
 
   /**
    * Vertical Navbar & Content Toggle Behavior
-   * Matches: $('#sidebarCollapse').on('click', function() { $('#sidebar, #content').toggleClass('active'); });
+   * Responsive off-canvas on mobile with backdrop overlay
    */
   const sidebarCollapseBtn = document.getElementById('sidebarCollapse');
   const sidebar = document.getElementById('sidebar');
   const content = document.getElementById('content');
 
-  function toggleSidebar() {
-    if (sidebar) sidebar.classList.toggle('active');
-    if (content) content.classList.toggle('active');
+  // Inject backdrop overlay if not already in DOM
+  let backdrop = document.querySelector('.sidebar-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.className = 'sidebar-backdrop';
+    document.body.appendChild(backdrop);
+  }
+
+  function toggleSidebar(forceState) {
+    if (!sidebar) return;
+    const isCurrentlyActive = sidebar.classList.contains('active');
+    const targetState = typeof forceState === 'boolean' ? forceState : !isCurrentlyActive;
+
+    sidebar.classList.toggle('active', targetState);
+    if (content) content.classList.toggle('active', targetState);
+
+    if (window.innerWidth <= 768) {
+      if (targetState) {
+        backdrop.classList.add('show');
+        document.body.classList.add('sidebar-open');
+      } else {
+        backdrop.classList.remove('show');
+        document.body.classList.remove('sidebar-open');
+      }
+    } else {
+      backdrop.classList.remove('show');
+      document.body.classList.remove('sidebar-open');
+    }
   }
 
   if (sidebarCollapseBtn) {
     sidebarCollapseBtn.addEventListener('click', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       toggleSidebar();
+    });
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', function(e) {
+      e.preventDefault();
+      toggleSidebar(false);
     });
   }
 
@@ -31,8 +64,8 @@
    */
   document.querySelectorAll('#sidebar .nav-link').forEach(navLink => {
     navLink.addEventListener('click', () => {
-      if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('active')) {
-        toggleSidebar();
+      if (window.innerWidth <= 768) {
+        toggleSidebar(false);
       }
     });
   });
@@ -43,8 +76,18 @@
   document.addEventListener('click', function(e) {
     if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('active')) {
       if (!sidebar.contains(e.target) && sidebarCollapseBtn && !sidebarCollapseBtn.contains(e.target)) {
-        toggleSidebar();
+        toggleSidebar(false);
       }
+    }
+  });
+
+  /**
+   * Handle window resize gracefully
+   */
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && backdrop.classList.contains('show')) {
+      backdrop.classList.remove('show');
+      document.body.classList.remove('sidebar-open');
     }
   });
 
